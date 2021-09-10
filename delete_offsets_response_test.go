@@ -63,7 +63,7 @@ func TestDeleteOffsetsResponse(t *testing.T) {
 			},
 		},
 	}
-	testResponse(t, "no error", response, noErrorDeleteOffsetsResponse)
+	testDecoder(t, "no error", noErrorDeleteOffsetsResponse, response)
 
 	response = &DeleteOffsetsResponse{
 		ErrorCode:    16,

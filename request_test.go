@@ -106,4 +106,14 @@ func testResponse(t *testing.T, name string, res protocolBody, expected []byte) 
 	}
 }
 
+func testDecoder(t *testing.T, name string, rawResponse []byte, expected protocolBody) {
+	decoded := reflect.New(reflect.TypeOf(expected).Elem()).Interface().(versionedDecoder)
+	if err := versionedDecode(rawResponse, decoded, expected.version()); err != nil {
+		t.Error("Decoding", name, "failed:", err)
+	}
+	if !reflect.DeepEqual(decoded, expected) {
+		t.Errorf("Decoded response does not match the exprected one\nexpected: %#v\ndecoded: %#v", expected, decoded)
+	}
+}
+
 func nullString(s string) *string { return &s }
